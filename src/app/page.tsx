@@ -2,7 +2,8 @@ import Link from 'next/link'
 
 const MENUS = [
   { href:'/today',icon:'☀',title:'今日の運勢',desc:'毎日更新。金運・仕事・恋愛・健康の4運勢と時間帯別アドバイス',badge:'無料・毎日更新',badgeColor:'#1a5c3a',badgeBg:'#f2fbf5' },
-  { href:'/fortune',icon:'✦',title:'AI統合深層鑑定',desc:'6占術を統合したAI鑑定。人生年表・金運・恋愛運・低迷期対策',badge:'¥300/回',badgeColor:'#2d1f5e',badgeBg:'#EEEDFE' },
+  { href:'/tarot',icon:'🔮',title:'タロット悩み相談',desc:'悩みを入力して3枚のカードを引く。AIが過去・現在・未来を深層解読',badge:'無料',badgeColor:'#534AB7',badgeBg:'#EEEDFE' },
+  { href:'/fortune',icon:'✦',title:'AI統合深層鑑定',desc:'7占術を統合したAI鑑定。人生年表・金運・恋愛運・低迷期対策',badge:'¥300/回',badgeColor:'#2d1f5e',badgeBg:'#f8f7ff' },
   { href:'/compatibility',icon:'💑',title:'相性鑑定',desc:'2人の命式を統合解析。恋愛・仕事・友情・長期的な絆を鑑定',badge:'無料',badgeColor:'#7a1f52',badgeBg:'#fff0f7' },
   { href:'/dream',icon:'🌙',title:'夢占い',desc:'夢のキーワードを入力するとAIが潜在意識からのメッセージを読み解く',badge:'¥100/回',badgeColor:'#0d4f8a',badgeBg:'#f0f6ff' },
   { href:'/calendar',icon:'📅',title:'吉日カレンダー',desc:'六曜・開運テーマ別おすすめ日を月カレンダーで確認',badge:'無料',badgeColor:'#7a4d0a',badgeBg:'#fffbf0' },
@@ -130,7 +131,7 @@ export default function HomePage() {
           <Link href="/pricing" className="hover:text-deep transition">料金プラン</Link>
           <Link href="/about" className="hover:text-deep transition">サービスについて</Link>
         </p>
-        <p>© 2024 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
+        <p>© 2026 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
       </footer>
     </main>
   )

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Noto_Sans_JP, Noto_Serif_JP, Cinzel } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const notoSans = Noto_Sans_JP({
@@ -38,6 +39,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja" className={`${notoSans.variable} ${notoSerif.variable} ${cinzel.variable}`}>
       <body className="font-sans bg-paper text-ink antialiased">
         {children}
+        {/* AdSense: パブリッシャーIDを取得したら ca-pub-XXXXXXXXXX を差し替えてください */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

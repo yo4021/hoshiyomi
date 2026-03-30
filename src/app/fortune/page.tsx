@@ -36,15 +36,13 @@ export default function FortunePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // フォーム送信：計算後そのままAI鑑定へ（Stripe一時無効）
+  // フォーム送信：計算のみ（無料）
   const handleSubmit = useCallback((input: DivinationInput) => {
     const calcResult = buildDivinationResult(input)
     setResult(calcResult)
     setCurrentInput(input)
-    setShowAiPaywall(false)
+    setShowAiPaywall(true)
     setError(null)
-    startAI(input, '')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Stripe決済へ

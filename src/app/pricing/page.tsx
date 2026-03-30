@@ -149,7 +149,7 @@ export default function PricingPage() {
           <Link href="/fortune" className="hover:text-deep mx-3">鑑定する</Link>
           <Link href="/about"  className="hover:text-deep mx-3">このサービスについて</Link>
         </p>
-        <p>© 2024 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
+        <p>© 2026 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
       </footer>
     </div>
   )
