@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { calcCompatibility, type CompatibilityResult } from '@/lib/compatibility'
+import ShareButtons from '@/components/ShareButtons'
 
 const COMPAT_COLOR: Record<string, string> = {
   '運命の相手': '#c9a84c', '最高の相性': '#1a5c3a', '良い相性': '#2d1f5e',
@@ -174,6 +175,9 @@ export default function CompatibilityPage() {
             <div className="w-full h-16 bg-[#f0ede6] rounded-xl flex items-center justify-center border border-border">
               <span className="text-xs text-muted">広告</span>
             </div>
+
+            {/* シェアボタン */}
+            <ShareButtons text={`💑 ${result.person1.name || 'あなた'}と${result.person2.name || '相手'}の相性は「${result.compatibility}」！\n総合スコア${result.overall}点\n#星詠み #AI占い #相性鑑定`} />
 
             {/* 別の組み合わせ */}
             <button className="btn-outline w-full" onClick={() => setResult(null)}>

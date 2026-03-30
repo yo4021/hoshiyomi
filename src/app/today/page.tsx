@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { calcTodayFortune, type TodayFortune } from '@/lib/today'
+import ShareButtons from '@/components/ShareButtons'
 
 const LUCK_COLOR: Record<string, string> = {
   '大吉': '#1a5c3a', '吉': '#2d1f5e', '中吉': '#7a4d0a', '小吉': '#0d4f8a', '末吉': '#6b6560', '凶': '#8b2020',
@@ -175,6 +176,9 @@ export default function TodayPage() {
             <div className="w-full h-16 bg-[#f0ede6] rounded-xl flex items-center justify-center border border-border">
               <span className="text-xs text-muted">広告</span>
             </div>
+
+            {/* シェアボタン */}
+            <ShareButtons text={`✨ ${dateLabel}の運勢は「${fortune.overall}」でした！\n金運${fortune.money} 仕事運${fortune.work} 恋愛運${fortune.love} 健康運${fortune.health}\n#星詠み #AI占い #今日の運勢`} />
 
             {/* 別の日付で見る */}
             <button className="btn-outline w-full" onClick={() => setFortune(null)}>

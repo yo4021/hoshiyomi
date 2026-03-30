@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import ShareButtons from '@/components/ShareButtons'
 
 // シードハッシュ
 function hash(s: string): number {
@@ -184,6 +185,9 @@ export default function CalendarPage() {
             ))}
           </div>
         </div>
+
+        {/* シェアボタン */}
+        <ShareButtons text={`📅 ${year}年${month+1}月の吉日カレンダーをチェック！\n大安・開運日がひと目でわかる\n#星詠み #吉日カレンダー #開運`} />
 
         {/* 広告枠 */}
         <div className="w-full h-16 bg-[#f0ede6] rounded-xl flex items-center justify-center mb-4 border border-border">
