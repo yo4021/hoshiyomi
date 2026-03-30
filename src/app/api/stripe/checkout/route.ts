@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 
 const PRODUCTS = {
-  dream:   { name: 'AI夢占い深層鑑定', amount: 100 },
-  fortune: { name: 'AI統合深層鑑定',   amount: 300 },
+  dream:   { name: 'AI夢占い深層鑑定',   amount: 100 },
+  tarot:   { name: 'AIタロット悩み相談', amount: 300 },
+  fortune: { name: 'AI統合深層鑑定',     amount: 500 },
 } as const
 
 type ProductType = keyof typeof PRODUCTS
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!product) return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
 
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-    const successPath = type === 'dream' ? '/dream' : '/fortune'
+    const successPath = type === 'dream' ? '/dream' : type === 'tarot' ? '/tarot' : '/fortune'
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

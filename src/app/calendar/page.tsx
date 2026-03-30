@@ -193,7 +193,7 @@ export default function CalendarPage() {
         {/* 深層鑑定誘導 */}
         <div className="card text-center bg-deep border-deep">
           <p className="text-xs text-white/60 mb-2">あなただけの詳細な運勢を知りたい方へ</p>
-          <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI統合深層鑑定（¥300）</h3>
+          <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI統合深層鑑定（¥500）</h3>
           <Link href="/fortune"
             className="inline-block bg-gold text-deep text-xs font-medium px-6 py-2.5 rounded-full hover:bg-gold2 transition">
             ✦ 深層鑑定を受ける

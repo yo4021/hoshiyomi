@@ -183,7 +183,7 @@ export default function CompatibilityPage() {
             {/* 深層鑑定誘導 */}
             <div className="card text-center bg-deep border-deep">
               <p className="text-xs text-white/60 mb-2">さらに詳しい相性の深層分析を</p>
-              <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI相性深層鑑定（¥300）</h3>
+              <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI相性深層鑑定（¥500）</h3>
               <p className="text-xs text-white/60 mb-4 leading-relaxed">
                 2人の命式を使ったAIによる詳細な相性分析・関係の未来予測・改善アドバイス
               </p>

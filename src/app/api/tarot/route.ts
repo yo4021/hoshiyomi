@@ -1,26 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { stripe } from '@/lib/stripe'
 
-const MAJOR_ARCANA = [
-  '愚者', '魔術師', '女教皇', '女帝', '皇帝', '法皇', '恋人', '戦車',
-  '力', '隠者', '運命の輪', '正義', '吊るされた男', '死神', '節制',
-  '悪魔', '塔', '星', '月', '太陽', '審判', '世界',
-]
+const SPREAD_NAMES: Record<string, string> = {
+  onecard:   '1枚引き（今のメッセージ）',
+  three:     '過去・現在・未来の3枚引き',
+  love:      '恋愛スプレッド',
+  situation: '状況分析の5枚引き',
+}
 
 interface DrawnCard {
   name: string
   reversed: boolean
   position: string
-}
-
-function drawCards(): DrawnCard[] {
-  const shuffled = [...MAJOR_ARCANA].sort(() => Math.random() - 0.5)
-  const positions = ['過去・根本', '現在・状況', '未来・指針']
-  return shuffled.slice(0, 3).map((name, i) => ({
-    name,
-    reversed: Math.random() > 0.6,
-    position: positions[i],
-  }))
 }
 
 export async function POST(req: NextRequest) {
@@ -29,50 +21,82 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { question, birthDate } = body as { question?: string; birthDate?: string }
+  const { question, birthDate, spreadId, cards, sessionId } = body as {
+    question?: string
+    birthDate?: string
+    spreadId?: string
+    cards?: DrawnCard[]
+    sessionId?: string
+  }
+
   if (!question?.trim()) {
     return NextResponse.json({ error: 'question is required' }, { status: 400 })
   }
+  if (!cards?.length) {
+    return NextResponse.json({ error: 'cards are required' }, { status: 400 })
+  }
 
-  const cards = drawCards()
-  const cardsText = cards.map(c =>
+  // Stripe決済検証（PAYMENT_ENABLED=true のときのみ）
+  const paymentEnabled = process.env.PAYMENT_ENABLED === 'true'
+  if (paymentEnabled) {
+    if (!sessionId) {
+      return NextResponse.json({ error: 'payment_required' }, { status: 402 })
+    }
+    try {
+      const stripeSession = await stripe.checkout.sessions.retrieve(sessionId)
+      if (stripeSession.payment_status !== 'paid') {
+        return NextResponse.json({ error: 'payment_required' }, { status: 402 })
+      }
+    } catch {
+      return NextResponse.json({ error: 'payment_required' }, { status: 402 })
+    }
+  }
+
+  const spreadName  = SPREAD_NAMES[spreadId ?? 'three'] ?? '3枚引き'
+  const cardsText   = cards.map(c =>
     `【${c.position}】${c.name}（${c.reversed ? '逆位置' : '正位置'}）`
   ).join('\n')
-  const birthInfo = birthDate
-    ? `\n依頼者の生年月日: ${birthDate}（命式を解釈の背景として参照）`
+  const birthInfo   = birthDate
+    ? `\n相談者の生年月日: ${birthDate}（命式・星座・九星の傾向を解釈に統合してください）`
     : ''
 
-  const prompt = `あなたはプロのタロット占い師です。以下の悩みと引いたカードを元に、深く丁寧なタロット鑑定を日本語で行ってください。
+  const prompt = `あなたはプロのタロット占い師であり、温かい心のカウンセラーでもあります。
+相談者の悩みに深く共感し、どんなカードが出ても必ず前向きな道を照らしてください。
+逆位置や困難を示すカードが出た場合も、「気づき」「乗り越えるべき課題」「成長のチャンス」として
+ポジティブにリフレーミングし、相談者が希望と勇気を持てるよう導いてください。
 
-【依頼者の悩み・質問】
-${question}
+【スプレッド】${spreadName}
+【相談者の悩み・質問】${question}
 ${birthInfo}
 
 【引いたカード】
 ${cardsText}
 
-以下の構成で鑑定文を書いてください（合計600〜800字）：
+以下の構成で、温かく丁寧な鑑定文を書いてください（合計700〜900字）：
 
-1. 3枚のカードが示す全体的なメッセージ（80字程度）
-2. 各カードの解釈（各カードについて位置の意味を踏まえて100〜120字ずつ）
-3. 悩みへの具体的なアドバイス（180字程度）
-4. これからの展望と行動指針（100字程度）
+◆ はじめに（50〜80字）
+「${question}」という悩みに寄り添い、その気持ちを受け止める共感の言葉から始めてください。
 
-語り口は温かく具体的に。カードの正位置・逆位置を明示しながら丁寧に解説してください。`
+◆ カードのメッセージ（各カード100〜150字）
+各カードの位置の意味と、相談者の状況を具体的に結びつけて解釈してください。
+逆位置のカードは「○○が逆位置で現れています。これは〜というメッセージです」と明示し、
+前向きな意味として解釈してください。
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+◆ 今のあなたに必要なこと（150〜200字）
+具体的な行動指針を2〜3点、実践しやすい形で伝えてください。
 
+◆ 締めくくり（80〜100字）
+希望と励ましを込めた温かいメッセージで締めてください。`
+
+  const client  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const encoder = new TextEncoder()
+
   const stream = new ReadableStream({
     async start(controller) {
-      controller.enqueue(encoder.encode(
-        `data: ${JSON.stringify({ type: 'cards', cards })}\n\n`
-      ))
-
       try {
         const anthropicStream = await client.messages.stream({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 1200,
+          max_tokens: 1400,
           messages: [{ role: 'user', content: prompt }],
         })
 

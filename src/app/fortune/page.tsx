@@ -167,7 +167,7 @@ export default function FortunePage() {
                   <div className="text-center py-4">
                     <div className="text-4xl mb-3">✦</div>
                     <h3 className="font-serif text-lg font-medium text-deep mb-1">AI深層鑑定を解除する</h3>
-                    <div className="text-3xl font-medium font-serif text-deep mb-1">¥300</div>
+                    <div className="text-3xl font-medium font-serif text-deep mb-1">¥500</div>
                     <p className="text-xs text-muted mb-5">1回分・6項目の詳細AI鑑定</p>
                     <div className="text-left space-y-1.5 mb-5 bg-white rounded-xl p-4">
                       {[
@@ -189,7 +189,7 @@ export default function FortunePage() {
                       className="w-full py-3.5 bg-deep text-white text-sm font-medium rounded-xl hover:bg-[#1e1446] transition mb-2 tracking-wide disabled:opacity-60">
                       {paying
                         ? <span className="flex items-center justify-center gap-2"><span className="spinner"/>決済画面へ移動中...</span>
-                        : '💳 ¥300でAI鑑定を解除する'}
+                        : '💳 ¥500でAI鑑定を解除する'}
                     </button>
                     <p className="text-[10px] text-muted">クレジットカード・各種決済対応（Stripe）</p>
                   </div>

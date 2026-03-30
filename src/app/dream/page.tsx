@@ -212,7 +212,7 @@ export default function DreamPage() {
             </button>
             <div className="card text-center bg-deep border-deep">
               <p className="text-xs text-white/60 mb-2">命式からさらに深い鑑定を</p>
-              <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI統合深層鑑定（¥300）</h3>
+              <h3 className="font-serif text-sm font-medium text-gold2 mb-3">AI統合深層鑑定（¥500）</h3>
               <p className="text-xs text-white/60 mb-4 leading-relaxed">
                 金運・仕事運・恋愛運・人生年表・低迷期の乗り越え方まで6項目のAI鑑定
               </p>
