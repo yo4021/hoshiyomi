@@ -25,7 +25,7 @@ const OPT_OPTIONS: { value: CorrectionOption; label: string }[] = [
 ]
 
 export default function FortuneForm({ onSubmit, loading }: Props) {
-  const [birthDate,    setBirthDate]    = useState('1990-06-15')
+  const [birthDate,    setBirthDate]    = useState('')
   const [birthTime,    setBirthTime]    = useState('')
   const [birthCity,    setBirthCity]    = useState('')
   const [nameSei,      setNameSei]      = useState('')
