@@ -33,10 +33,10 @@ export default function FortuneForm({ onSubmit, loading }: Props) {
   const [nameSeiKana,  setNameSeiKana]  = useState('')
   const [nameMeiKana,  setNameMeiKana]  = useState('')
   const [activeTypes,  setActiveTypes]  = useState<Set<DivinationType>>(
-    new Set(['western','vedic','kyusei','shiju','numerology','name'])
+    new Set<DivinationType>(['western','vedic','kyusei','shiju','numerology','name'])
   )
   const [activeOpts,   setActiveOpts]   = useState<Set<CorrectionOption>>(
-    new Set(['precession','climate'])
+    new Set<CorrectionOption>(['precession','climate'])
   )
 
   function toggleType(v: DivinationType) {
