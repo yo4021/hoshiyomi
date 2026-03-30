@@ -1,0 +1,87 @@
+import Link from 'next/link'
+
+const MENUS = [
+  { href:'/today',icon:'☀',title:'今日の運勢',desc:'毎日更新。金運・仕事・恋愛・健康の4運勢と時間帯別アドバイス',badge:'無料・毎日更新',badgeColor:'#1a5c3a',badgeBg:'#f2fbf5' },
+  { href:'/fortune',icon:'✦',title:'AI統合深層鑑定',desc:'6占術を統合したAI鑑定。人生年表・金運・恋愛運・低迷期対策',badge:'¥300/回',badgeColor:'#2d1f5e',badgeBg:'#EEEDFE' },
+  { href:'/compatibility',icon:'💑',title:'相性鑑定',desc:'2人の命式を統合解析。恋愛・仕事・友情・長期的な絆を鑑定',badge:'無料',badgeColor:'#7a1f52',badgeBg:'#fff0f7' },
+  { href:'/dream',icon:'🌙',title:'夢占い',desc:'夢のキーワードを入力するとAIが潜在意識からのメッセージを読み解く',badge:'¥100/回',badgeColor:'#0d4f8a',badgeBg:'#f0f6ff' },
+  { href:'/calendar',icon:'📅',title:'吉日カレンダー',desc:'六曜・開運テーマ別おすすめ日を月カレンダーで確認',badge:'無料',badgeColor:'#7a4d0a',badgeBg:'#fffbf0' },
+]
+
+export default function HomePage() {
+  return (
+    <main className="min-h-screen">
+      <section className="relative overflow-hidden bg-deep text-white py-20 px-6 text-center">
+        <div className="absolute inset-0 pointer-events-none" style={{background:'radial-gradient(ellipse 90% 70% at 50% -10%,rgba(201,168,76,.22),transparent)'}}/>
+        <p className="font-display text-xs tracking-[.3em] text-gold mb-4 uppercase relative z-10">Integrated Divination System</p>
+        <h1 className="font-display text-4xl md:text-5xl font-semibold tracking-widest mb-4 leading-tight relative z-10">星詠み<span className="text-gold2">占術</span>エンジン</h1>
+        <p className="text-sm text-white/50 tracking-widest mb-10 max-w-lg mx-auto leading-loose relative z-10">西洋・東洋・姓名判断を統合し、歳差補正で現代に最適化。<br/>AIが金運・仕事運・恋愛運を含む深層鑑定を生成します。</p>
+        <div className="flex flex-wrap gap-3 justify-center relative z-10">
+          <Link href="/today" className="inline-block bg-gold text-deep font-medium text-sm px-8 py-3.5 rounded-full tracking-widest hover:bg-gold2 transition-all hover:-translate-y-0.5 shadow-lg">☀ 今日の運勢を見る（無料）</Link>
+          <Link href="/fortune" className="inline-block border border-white/30 text-white font-medium text-sm px-8 py-3.5 rounded-full tracking-widest hover:bg-white/10 transition-all">✦ 深層鑑定を受ける</Link>
+        </div>
+      </section>
+
+      <section className="max-w-2xl mx-auto px-5 py-14">
+        <h2 className="font-serif text-xl font-medium text-center mb-2 tracking-wider">すべての機能</h2>
+        <p className="text-xs text-muted text-center mb-8">無料から始められます</p>
+        <div className="w-full h-16 bg-[#f0ede6] rounded-xl flex items-center justify-center mb-6 border border-border">
+          <span className="text-xs text-muted">広告</span>
+        </div>
+        <div className="space-y-3">
+          {MENUS.map(m=>(
+            <Link key={m.href} href={m.href} className="flex items-center gap-4 card hover:shadow-md hover:-translate-y-0.5 transition-all group">
+              <div className="w-12 h-12 rounded-2xl bg-[#f0ede6] flex items-center justify-center text-2xl flex-shrink-0 group-hover:bg-deep group-hover:text-gold2 transition-all">{m.icon}</div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1 flex-wrap">
+                  <span className="font-serif text-sm font-medium text-deep">{m.title}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full" style={{background:m.badgeBg,color:m.badgeColor}}>{m.badge}</span>
+                </div>
+                <p className="text-xs text-muted leading-relaxed">{m.desc}</p>
+              </div>
+              <span className="text-muted group-hover:text-deep transition text-sm">→</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-deep/5 py-14 px-5">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-serif text-xl font-medium text-center mb-8 tracking-wider">星詠みが選ばれる理由</h2>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {[
+              {icon:'✦',title:'歳差補正で精度向上',desc:'地球の歳差運動による約23°のズレを補正。西洋とインド占術を現代の天体位置に合わせて統合します。'},
+              {icon:'◈',title:'6占術の統合鑑定',desc:'複数の占術が共鳴するテーマを浮かび上がらせます。単一占術では見えない深層が明らかになります。'},
+              {icon:'◉',title:'AI深層鑑定',desc:'Claude AIが命式から金運・仕事運・恋愛運・人生の転機を具体的かつ動的に生成します。'},
+            ].map(f=>(
+              <div key={f.title} className="card text-center">
+                <div className="font-display text-2xl text-gold mb-3">{f.icon}</div>
+                <h3 className="font-serif text-sm font-medium text-deep mb-2">{f.title}</h3>
+                <p className="text-xs text-muted leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-deep text-white text-center py-16 px-6">
+        <h2 className="font-display text-2xl font-semibold tracking-widest mb-3">今日の運勢を確認する</h2>
+        <p className="text-sm text-white/50 mb-8">生年月日だけで始められます。無料。</p>
+        <Link href="/today" className="inline-block bg-gold text-deep font-medium text-sm px-10 py-4 rounded-full tracking-widest hover:bg-gold2 transition-all">☀ 今日の運勢を見る</Link>
+      </section>
+
+      <footer className="border-t border-border py-8 px-6 text-center text-xs text-muted">
+        <p className="mb-3 flex flex-wrap justify-center gap-x-4 gap-y-1">
+          <Link href="/today" className="hover:text-deep transition">今日の運勢</Link>
+          <Link href="/fortune" className="hover:text-deep transition">深層鑑定</Link>
+          <Link href="/compatibility" className="hover:text-deep transition">相性鑑定</Link>
+          <Link href="/dream" className="hover:text-deep transition">夢占い</Link>
+          <Link href="/calendar" className="hover:text-deep transition">吉日カレンダー</Link>
+          <Link href="/pricing" className="hover:text-deep transition">料金プラン</Link>
+          <Link href="/about" className="hover:text-deep transition">サービスについて</Link>
+        </p>
+        <p>© 2024 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
+      </footer>
+    </main>
+  )
+}

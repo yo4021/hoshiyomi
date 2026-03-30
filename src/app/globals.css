@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-noto-sans: 'Noto Sans JP', system-ui, sans-serif;
+  --font-noto-serif: 'Noto Serif JP', Georgia, serif;
+  --font-cinzel: 'Cinzel', serif;
+}
+
+/* ─── ベーススタイル ─── */
+html { scroll-behavior: smooth; }
+body { line-height: 1.75; }
+
+/* ─── カスタムコンポーネント ─── */
+@layer components {
+  /* セクションヘッダー */
+  .sec-head {
+    @apply flex items-center gap-3 mb-5 mt-10 pb-3 border-b border-border;
+  }
+  .sec-head::before {
+    content: '';
+    @apply block w-1 h-6 rounded-sm flex-shrink-0;
+    background: linear-gradient(to bottom, #c9a84c, #e8c96a);
+  }
+  .sec-head h2 {
+    @apply font-serif text-base font-medium tracking-wider;
+  }
+
+  /* カード */
+  .card {
+    @apply bg-white border border-border rounded-2xl p-6 shadow-sm;
+  }
+  .card-sm {
+    @apply bg-white border border-border rounded-xl p-4 shadow-sm;
+  }
+
+  /* バッジ */
+  .badge {
+    @apply text-xs px-2.5 py-0.5 rounded-full bg-light text-mid;
+  }
+  .badge-gold {
+    @apply text-xs px-2.5 py-0.5 rounded-full;
+    background: #fffbf0;
+    color: #7a4d0a;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  /* ボタン */
+  .btn-primary {
+    @apply w-full py-4 text-sm font-medium text-white rounded-xl
+           transition-all duration-200 cursor-pointer border-none
+           tracking-wider relative overflow-hidden;
+    background: #2d1f5e;
+  }
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(135deg, rgba(201,168,76,.25), transparent);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #1e1446;
+    @apply -translate-y-0.5 shadow-lg;
+  }
+  .btn-primary:disabled {
+    @apply bg-gray-300 cursor-not-allowed translate-y-0 shadow-none;
+  }
+  .btn-outline {
+    @apply px-6 py-3 text-sm font-medium rounded-xl border-2 border-deep text-deep
+           bg-white hover:bg-light transition-all duration-150 cursor-pointer tracking-wide;
+  }
+
+  /* フォーム */
+  .form-input {
+    @apply w-full text-sm px-3.5 py-2.5 border border-border rounded-xl
+           bg-[#fdfcf9] text-ink outline-none font-sans
+           transition-all duration-150;
+  }
+  .form-input:focus {
+    @apply border-mid;
+    box-shadow: 0 0 0 3px rgba(83,74,183,.1);
+  }
+
+  /* チップ（占術選択） */
+  .chip {
+    @apply text-xs px-3.5 py-1.5 border border-border rounded-full
+           bg-transparent text-muted cursor-pointer transition-all duration-150;
+  }
+  .chip.active {
+    @apply bg-deep border-deep text-white;
+  }
+  .chip-gold.active {
+    background: linear-gradient(135deg, #b8903a, #d4aa52);
+    border-color: #b8903a;
+    @apply text-white;
+  }
+
+  /* スピナー */
+  .spinner {
+    @apply w-4 h-4 border-2 border-border border-t-mid rounded-full animate-spin flex-shrink-0;
+  }
+
+  /* ストリーミングカーソル */
+  .typing-cursor::after {
+    content: '▌';
+    animation: blink .6s steps(1) infinite;
+    @apply text-mid;
+  }
+}
+
+/* ─── アニメーション ─── */
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp .5s ease forwards; }
+
+/* ─── スクロールバー ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #e0dbd0; border-radius: 3px; }
