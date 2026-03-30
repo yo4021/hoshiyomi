@@ -57,7 +57,7 @@ export default function AboutPage() {
       </main>
 
       <footer className="border-t border-border py-8 px-6 text-center text-xs text-muted">
-        <p>© 2024 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
+        <p>© 2026 星詠み占術エンジン　｜　本サービスはエンターテインメント目的です</p>
       </footer>
     </div>
   )
