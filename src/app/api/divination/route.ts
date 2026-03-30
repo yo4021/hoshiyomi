@@ -13,7 +13,6 @@ import {
   buildSectionPrompt,
 } from '@/lib/divination'
 import type { DivinationInput, ReadingSection } from '@/types'
-import { stripe } from '@/lib/stripe'
 
 // ─── レート制限（簡易インメモリ）────────────────────────────────
 // 本番はRedis（Vercel KV / Upstash）を使用すること
@@ -69,20 +68,6 @@ export async function POST(req: NextRequest) {
   const input = validateInput(body)
   if (!input) {
     return NextResponse.json({ error: 'Invalid input: birthDate is required (YYYY-MM-DD)' }, { status: 400 })
-  }
-
-  // Stripeで支払い検証（サーバーサイド）
-  const sessionId = (body as Record<string,unknown>).sessionId as string | undefined
-  if (!sessionId) {
-    return NextResponse.json({ error: 'payment_required' }, { status: 402 })
-  }
-  try {
-    const stripeSession = await stripe.checkout.sessions.retrieve(sessionId)
-    if (stripeSession.payment_status !== 'paid') {
-      return NextResponse.json({ error: 'payment_required' }, { status: 402 })
-    }
-  } catch {
-    return NextResponse.json({ error: 'payment_required' }, { status: 402 })
   }
 
   // セクション取得（部分更新時）
