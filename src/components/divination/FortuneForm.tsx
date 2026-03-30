@@ -57,6 +57,7 @@ export default function FortuneForm({ onSubmit, loading }: Props) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!birthDate) return
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) return
     onSubmit({
       birthDate,
       birthTime: birthTime || undefined,
@@ -172,7 +173,7 @@ export default function FortuneForm({ onSubmit, loading }: Props) {
         </div>
       </div>
 
-      <button type="submit" className="btn-primary" disabled={loading || !birthDate}>
+      <button type="submit" className="btn-primary" disabled={loading || !/^\d{4}-\d{2}-\d{2}$/.test(birthDate)}>
         {loading ? (
           <span className="flex items-center justify-center gap-3">
             <span className="spinner" /> 鑑定中...
